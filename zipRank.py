@@ -258,9 +258,26 @@ if homeValue > medianHomeValue:
 if homeValue < medianHomeValue:
     print("When it comes to your $" + str(homeValue) + " house it's worth $" + str(medianHomeValue - homeValue) + " less than the median home value in " + city + " of $" + str(medianHomeValue) + ".")
 
+print('\n')
+
+#use json request to add US Census data about the gender wage gap in the user's state
+def getCensusData(): 
+    ''' asks for user's US state of residence
+    returns the median earnings of men vs. women in that state
+    as well as the percentage of the gender pay gap in that state. '''
+#import to search states by fips code and make json request
+import us 
+import requests 
+#add api endpoint
+a = requests.get('https://api.census.gov/data/2016/acs/acs5/subject?get=NAME,S2414_C04_001E,S2419_C02_001E,S2419_C03_001E&for=state:*')
+#search for state
+yourState = str(us.states.lookup(zc.state))
+# find state specific stats and return results
+for x in (a.json()):
+    if (x[0]) == yourState:
+        print("Did you know that in " + (x[0]) + " women make " + (x[1]) + "% of what men earn? On average men earn $"+ (x[2]) + " a year versus women who earn $" + (x[3]) + " a year.")
 
 
-        
 
     
     
